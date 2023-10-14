@@ -74,4 +74,8 @@ const trim = (c) => {
   return copy.canvas;
 };
 
-export { loadImage, trim, createCanvas };
+const getImageUrl = (url) => {
+  return new URL(url, import.meta.url).href;
+};
+
+export { loadImage, trim, createCanvas, getImageUrl };

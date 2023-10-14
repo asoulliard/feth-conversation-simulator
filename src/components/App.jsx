@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { portraitMeta } from "../meta/portrait";
 import { glyphMeta } from "../meta/glyph";
-import { createCanvas, loadImage, trim } from "../utils";
+import { createCanvas, loadImage, trim, getImageUrl } from "../utils";
 
 import Canvas from "./Canvas";
 import Form from "./Form";
@@ -184,7 +184,7 @@ export default function App({ resources }) {
 
   async function drawPortrait(context) {
     const portraitImage = await loadImage(
-      `/images/portraits/${portrait}/${emotion}.png`
+      getImageUrl(`/images/portraits/${portrait}/${emotion}.png`)
     );
 
     const [canvas, ctx] = createCanvas(
