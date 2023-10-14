@@ -1,0 +1,22 @@
+.app {
+  padding: 20px 20px 0px 20px;
+}
+
+textarea {
+  resize: none;
+}
+
+a,
+a:hover {
+  color: #d95d78;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.btn-anna,
+.btn-anna:hover {
+  background-color: #d95d78;
+  color: #fff;
+}
