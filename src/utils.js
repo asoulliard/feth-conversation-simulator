@@ -75,7 +75,7 @@ const trim = (c) => {
 };
 
 const getImageUrl = (url) => {
-  return new URL(url, import.meta.url).href;
+  return `/feth-conversation-simulator${url}`;
 };
 
 export { loadImage, trim, createCanvas, getImageUrl };
