@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { portraitMeta } from "../meta/portrait";
 import { glyphMeta } from "../meta/glyph";
-import { createCanvas, loadImage, trim, getImageUrl } from "../utils";
+import { createCanvas, loadImage, trim, getImageUrl, wait } from "../utils";
 
 import Canvas from "./Canvas";
 import Form from "./Form";
@@ -38,6 +38,7 @@ export default function App({ resources }) {
   }
 
   function handlePortraitChange(e) {
+    setEmotion(0);
     setPortrait(e.target.value);
     setEmotions([...Array(portraitMeta[e.target.value]).keys()]);
   }
@@ -182,11 +183,7 @@ export default function App({ resources }) {
     }
   }
 
-  async function drawPortrait(context) {
-    const portraitImage = await loadImage(
-      getImageUrl(`/images/portraits/${portrait}/${emotion}.png`)
-    );
-
+  function drawPortrait(context, portraitImage) {
     const [canvas, ctx] = createCanvas(
       portraitImage.width,
       portraitImage.height
@@ -200,10 +197,20 @@ export default function App({ resources }) {
     context.drawImage(canvas, 1200, 0);
   }
 
+  function drawPlaceholder(context) {
+    context.font = "48px arial";
+    context.fillText("Rendering...", 750, 250);
+  }
+
   async function handleDraw(context) {
     clearCanvas(context);
+    drawPlaceholder(context);
+    const portraitImage = await loadImage(
+      getImageUrl(`/images/portraits/${portrait}/${emotion}.png`)
+    );
+    clearCanvas(context);
     drawTextBox(context);
-    await drawPortrait(context);
+    drawPortrait(context, portraitImage);
     drawName(context);
     drawText(context);
   }

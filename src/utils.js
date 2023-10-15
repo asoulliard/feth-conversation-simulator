@@ -78,4 +78,10 @@ const getImageUrl = (url) => {
   return `/feth-conversation-simulator${url}`;
 };
 
-export { loadImage, trim, createCanvas, getImageUrl };
+const wait = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), ms);
+  });
+};
+
+export { loadImage, trim, createCanvas, getImageUrl, wait };
