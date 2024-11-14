@@ -20,9 +20,11 @@ const TEXT_POS_X = 300;
 const TEXT_POS_Y = 308;
 const MAX_TEXT_ROW = 3;
 const DEFAULT_CHARACTER = "Anna";
+const DEFAULT_COLOR = "Purple";
 
 const initialPortraits = Object.keys(portraitMeta);
 const initialEmotions = [...Array(portraitMeta[DEFAULT_CHARACTER]).keys()];
+const initialColors = ["Purple", "Red"];
 const initialText = "Welcome!";
 
 export default function App({ resources }) {
@@ -30,6 +32,7 @@ export default function App({ resources }) {
   const [name, setName] = useState(DEFAULT_CHARACTER);
   const [emotion, setEmotion] = useState(initialEmotions[0]);
   const [portrait, setPortrait] = useState(DEFAULT_CHARACTER);
+  const [color, setColor] = useState(DEFAULT_COLOR);
   const [text, setText] = useState(initialText);
   const [globalCanvas, setGlobalCanvas] = useState(null);
 
@@ -45,6 +48,10 @@ export default function App({ resources }) {
 
   function handleEmotionChange(e) {
     setEmotion(e.target.value);
+  }
+
+  function handleColorChange(e) {
+    setColor(e.target.value);
   }
 
   function handleTextChange(e) {
@@ -66,8 +73,8 @@ export default function App({ resources }) {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   }
 
-  function drawTextBox(context) {
-    context.drawImage(resources[0], 0, 0);
+  function drawTextBox(context, textboxImage) {
+    context.drawImage(textboxImage, 0, 0);
   }
 
   function drawName(context) {
@@ -99,7 +106,7 @@ export default function App({ resources }) {
 
       // Drawing letter in empty canvas
       ctx.drawImage(
-        resources[1],
+        resources[0],
         meta[0] * GLYPH_W,
         meta[1] * GLYPH_H,
         GLYPH_W,
@@ -164,7 +171,7 @@ export default function App({ resources }) {
 
       // Drawing letter in empty canvas
       ctx.drawImage(
-        resources[2],
+        resources[1],
         meta[0] * GLYPH_W,
         meta[1] * GLYPH_H,
         GLYPH_W,
@@ -190,7 +197,7 @@ export default function App({ resources }) {
     );
 
     // Drawing portrait and mask
-    ctx.drawImage(resources[3], 0, 0);
+    ctx.drawImage(resources[2], 0, 0);
     ctx.globalCompositeOperation = "source-in";
     ctx.drawImage(portraitImage, 0, 0);
 
@@ -208,8 +215,11 @@ export default function App({ resources }) {
     const portraitImage = await loadImage(
       getImageUrl(`/images/portraits/${portrait}/${emotion}.png`)
     );
+    const textboxImage = await loadImage(
+      getImageUrl(`/images/textboxes/${color}.png`)
+    );
     clearCanvas(context);
-    drawTextBox(context);
+    drawTextBox(context, textboxImage);
     drawPortrait(context, portraitImage);
     drawName(context);
     drawText(context);
@@ -222,6 +232,7 @@ export default function App({ resources }) {
           name={name}
           portrait={portrait}
           emotion={emotion}
+          color={color}
           text={text}
           onDraw={handleDraw}
           onCanvas={handleCanvas}
@@ -231,12 +242,15 @@ export default function App({ resources }) {
         name={name}
         portrait={portrait}
         emotion={emotion}
+        color={color}
         text={text}
         portraits={initialPortraits}
         emotions={emotions}
+        colors={initialColors}
         onNameChange={handleNameChange}
         onPortraitChange={handlePortraitChange}
         onEmotionChange={handleEmotionChange}
+        onColorChange={handleColorChange}
         onTextChange={handleTextChange}
         onDownload={handleDownload}
       />

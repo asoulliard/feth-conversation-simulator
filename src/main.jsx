@@ -6,7 +6,6 @@ import "./index.css";
 
 async function preload() {
   const resources = [
-    await loadImage(getImageUrl("/images/textbox.png")),
     await loadImage(getImageUrl("/images/f.png")),
     await loadImage(getImageUrl("/images/fc.png")),
     await loadImage(getImageUrl("/images/mask.png")),
