@@ -61,5 +61,6 @@ https://asoulliard.github.io/feth-conversation-simulator/
 **v1.0.6**
 
 - Begin asoulliard fork.
+- Added Dark Bishop.
 - Added textbox color options.
 - Added options to reverse portrait and frame.
