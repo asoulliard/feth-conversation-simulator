@@ -15,8 +15,20 @@ a:hover {
   text-decoration: none;
 }
 
-.btn-anna,
-.btn-anna:hover {
+.btn-download,
+.btn-download:hover {
   background-color: #d95d78;
   color: #fff;
+}
+
+input[type=checkbox] {
+  margin-right: 10px;
+}
+
+.checkbox-top {
+  margin-top: -5px;
+}
+
+.checkbox-bottom {
+  margin-bottom: 0px;
 }

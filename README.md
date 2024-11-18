@@ -2,7 +2,7 @@
 
 ## URL
 
-https://bqio.github.io/feth-conversation-simulator/
+https://asoulliard.github.io/feth-conversation-simulator/
 
 ## Changelog
 
@@ -57,3 +57,9 @@ https://bqio.github.io/feth-conversation-simulator/
 **v1.0.5**
 
 - Moving to React.
+
+**v1.0.6**
+
+- Begin asoulliard fork.
+- Added textbox color options.
+- Added options to reverse portrait and frame.

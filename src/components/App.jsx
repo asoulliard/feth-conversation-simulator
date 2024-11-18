@@ -32,7 +32,9 @@ export default function App({ resources }) {
   const [name, setName] = useState(DEFAULT_CHARACTER);
   const [emotion, setEmotion] = useState(initialEmotions[0]);
   const [portrait, setPortrait] = useState(DEFAULT_CHARACTER);
+  const [reversePortrait, setReversePortrait] = useState(false);
   const [color, setColor] = useState(DEFAULT_COLOR);
+  const [reverseFrame, setReverseFrame] = useState(false);
   const [text, setText] = useState(initialText);
   const [globalCanvas, setGlobalCanvas] = useState(null);
 
@@ -46,6 +48,10 @@ export default function App({ resources }) {
     setEmotions([...Array(portraitMeta[e.target.value]).keys()]);
   }
 
+  function handleReversePortraitChange(e) {
+    setReversePortrait(e.target.checked);
+  }
+
   function handleEmotionChange(e) {
     setEmotion(e.target.value);
   }
@@ -54,12 +60,16 @@ export default function App({ resources }) {
     setColor(e.target.value);
   }
 
+  function handleReverseFrameChange(e) {
+    setReverseFrame(e.target.checked);
+  }
+
   function handleTextChange(e) {
     setText(e.target.value);
   }
 
   function handleDownload(e) {
-    e.target.download = `${name}.png`;
+    e.target.download = "Dialogue.png";
     e.target.href = globalCanvas
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
@@ -74,7 +84,11 @@ export default function App({ resources }) {
   }
 
   function drawTextBox(context, textboxImage) {
+    context.save();
+    context.scale(reverseFrame ? -1 : 1, 1);
+    context.translate(reverseFrame ? (-1 * textboxImage.width) : 0, 0);
     context.drawImage(textboxImage, 0, 0);
+    context.restore();
   }
 
   function drawName(context) {
@@ -197,11 +211,20 @@ export default function App({ resources }) {
     );
 
     // Drawing portrait and mask
+    ctx.save();
+    ctx.scale(reverseFrame ? -1 : 1, 1);
+    ctx.translate(reverseFrame ? (-1 * portraitImage.width) : 0, 0);
     ctx.drawImage(resources[2], 0, 0);
+    ctx.restore();
+    
     ctx.globalCompositeOperation = "source-in";
+    ctx.save();
+    ctx.scale(reversePortrait ? -1 : 1, 1);
+    ctx.translate(reversePortrait ? (-1 * portraitImage.width) : 0, 0);
     ctx.drawImage(portraitImage, 0, 0);
 
-    context.drawImage(canvas, 1200, 0);
+    context.drawImage(canvas, reverseFrame ? 16 : 1200, 0);
+    ctx.restore();
   }
 
   function drawPlaceholder(context) {
@@ -231,8 +254,10 @@ export default function App({ resources }) {
         <Canvas
           name={name}
           portrait={portrait}
+          reversePortrait={reversePortrait}
           emotion={emotion}
           color={color}
+          reverseFrame={reverseFrame}
           text={text}
           onDraw={handleDraw}
           onCanvas={handleCanvas}
@@ -241,33 +266,37 @@ export default function App({ resources }) {
       <Form
         name={name}
         portrait={portrait}
+        reversePortrait={reversePortrait}
         emotion={emotion}
         color={color}
+        reverseFrame={reverseFrame}
         text={text}
         portraits={initialPortraits}
         emotions={emotions}
         colors={initialColors}
         onNameChange={handleNameChange}
         onPortraitChange={handlePortraitChange}
+        onReversePortraitChange={handleReversePortraitChange}
         onEmotionChange={handleEmotionChange}
         onColorChange={handleColorChange}
+        onReverseFrameChange={handleReverseFrameChange}
         onTextChange={handleTextChange}
         onDownload={handleDownload}
       />
       <p className="text-center text-muted">
-        <strong>v1.0.5</strong> by{" "}
+        <strong>v1.0.6</strong> by{" "}
+        <a target="_blank" href="https://github.com/asoulliard">
+          asoulliard
+        </a>
+        , forked from{" "}
         <a target="_blank" href="https://github.com/bqio">
           bqio
         </a>
-        , thx{" "}
-        <a target="_blank" href="https://github.com/SinsofSloth">
-          {" "}
-          SinsofSloth
-        </a>
-        ,{" "}
+      </p>
+      <p className="text-center text-muted">
         <a
           target="_blank"
-          href="https://github.com/bqio/FE3H-Text-Simulator/blob/master/README.md"
+          href="https://github.com/asoulliard/FE3H-Text-Simulator/blob/master/README.md"
         >
           {" "}
           Changelog{" "}

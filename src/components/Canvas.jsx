@@ -5,8 +5,10 @@ export default function Canvas({
   onDraw,
   name,
   portrait,
+  reversePortrait,
   emotion,
   color,
+  reverseFrame,
   text,
 }) {
   const canvasRef = useRef(null);
@@ -20,7 +22,7 @@ export default function Canvas({
       willReadFrequently: true,
     });
     onDraw(context);
-  }, [name, portrait, emotion, color, text]);
+  }, [name, portrait, reversePortrait, emotion, color, reverseFrame, text]);
 
   return (
     <canvas
