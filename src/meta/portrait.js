@@ -28,6 +28,7 @@ export const portraitMeta = {
   Cornelia: 5,
   Cyril: 6,
   "Cyril (Timeskip)": 6,
+  "Dark Bishop": 1,
   "Death Knight": 1,
   Dedue: 7,
   "Dedue (Timeskip)": 7,

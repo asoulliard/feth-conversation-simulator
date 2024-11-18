@@ -2,15 +2,19 @@ export default function Form({
   name,
   emotion,
   portrait,
+  reversePortrait,
   color,
+  reverseFrame,
   text,
   portraits,
   emotions,
   colors,
   onNameChange,
   onPortraitChange,
+  onReversePortraitChange,
   onEmotionChange,
   onColorChange,
+  onReverseFrameChange,
   onTextChange,
   onDownload,
 }) {
@@ -78,6 +82,25 @@ export default function Form({
             {colorList}
           </select>
         </div>
+        <div className="col">
+          <label>Options</label>
+          <div className="row no-gutters checkbox-top">
+            <input
+              type="checkbox"
+              checked={reversePortrait}
+              onChange={onReversePortraitChange}
+            />
+            Reverse Portrait
+          </div>
+          <div className="row no-gutters checkbox-bottom">
+            <input
+              type="checkbox"
+              checked={reverseFrame}
+              onChange={onReverseFrameChange}
+            />
+            Reverse Frame
+          </div>
+        </div>
       </div>
       <div className="form-group">
         <label>Text</label>
@@ -90,8 +113,8 @@ export default function Form({
           aria-autocomplete="none"
         ></textarea>
       </div>
-      <a onClick={onDownload} className="btn btn-block btn-anna mb-3" href="#">
-        Download {name}.png
+      <a onClick={onDownload} className="btn btn-block btn-download mb-3" href="#">
+        Download
       </a>
     </form>
   );
