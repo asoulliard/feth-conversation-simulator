@@ -13,11 +13,16 @@ const GLYPH_OUT_H = 44;
 const GLYPH_NAME_MARGIN = 1;
 const GLYPH_TEXT_MARGIN = 0;
 const SPACE_SIZE = 10;
-const NAME_POS_X_START = 100;
-const NAME_POS_X_END = 495;
+const NAME_MAX_WIDTH = 383;
+const NAME_POS_X_START = 108;
+const NAME_POS_X_END = 491;
+const NAME_REV_POS_X_START = 1237;
+const NAME_REV_POS_X_END = 1620;
 const NAME_POS_Y = 228;
+const TEXT_MAX_WIDTH = 890;
 const TEXT_POS_X = 300;
-const TEXT_POS_Y = 308;
+const TEXT_REV_POS_X = 538;
+const TEXT_POS_Y = 300;
 const MAX_TEXT_ROW = 3;
 const DEFAULT_CHARACTER = "Anna";
 const DEFAULT_COLOR = "Purple";
@@ -139,8 +144,8 @@ export default function App({ resources }) {
     const width = word
       .map((letter) => letter.width)
       .reduce((total, width) => (total += width));
-    let posX =
-      (NAME_POS_X_END - NAME_POS_X_START - width) / 2 + NAME_POS_X_START;
+    let posX = reverseFrame ? (NAME_REV_POS_X_END - NAME_REV_POS_X_START - width) / 2 + NAME_REV_POS_X_START :
+    (NAME_POS_X_END - NAME_POS_X_START - width) / 2 + NAME_POS_X_START;
 
     // Drawing word
     for (const letter of word) {
@@ -154,13 +159,13 @@ export default function App({ resources }) {
     if (text == "") return;
 
     // Initialize text positions
-    let posX = TEXT_POS_X;
+    let posX = reverseFrame ? TEXT_REV_POS_X : TEXT_POS_X;
     let posY = TEXT_POS_Y;
 
     for (let i = 0; i < text.length; i++) {
       // If letter eq new line, then change pos
       if (text[i] == "\n") {
-        posX = TEXT_POS_X;
+        posX = reverseFrame ? TEXT_REV_POS_X : TEXT_POS_X;
         posY += GLYPH_H;
         continue;
       }
